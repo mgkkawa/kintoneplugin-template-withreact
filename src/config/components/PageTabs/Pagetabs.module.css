@@ -1,0 +1,7 @@
+.tab-wrap {
+  display: flex;
+}
+
+.tab-item {
+  display: inline-block;
+}

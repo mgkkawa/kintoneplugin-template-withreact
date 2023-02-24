@@ -6,7 +6,7 @@
     "js": ["js/desktop.js"],
     "css": ["css/desktop.css"]
   },
-  "icon": "image/icon.png",
+  "icon": "image/スパナのアイコン素材.png",
   "config": {
     "html": "html/config.html",
     "js": ["js/config.js"],
@@ -14,10 +14,12 @@
     "required_params": []
   },
   "name": {
-    "en": "tsr-power-servery"
+    "en": "call-app-reflesh",
+    "ja": "コールアプリ用プラグイン2.0"
   },
   "description": {
-    "en": "tsr-power-servery"
+    "en": "call-app-reflesh",
+    "ja": "コールアプリ用プラグイン2.0"
   },
   "mobile": {
     "js": ["js/mobile.js"],
