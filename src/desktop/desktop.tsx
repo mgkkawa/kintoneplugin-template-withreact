@@ -1,8 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
 import { triggers } from '../types'
 
-const { index, detail, edit, create } = triggers
+const { detail, edit } = triggers
 const config: PluginConfig = kintone.plugin.app.getConfig(kintone.$PLUGIN_ID)
 const { changes, hiddens, resets, disableds } = config
 
@@ -63,17 +61,31 @@ const fieldDisableds = (event: any, disableds: DisableField[] | undefined) => {
   }
 }
 
-kintone.events.on(detail, async event => {
-  const { record } = event
+const changeEvent = (change: ChangeEventProps) => {
+  const { fieldCd, hiddens, resets, disableds } = change
 
+  kintone.events.on(edit.change(fieldCd), event => {
+    fieldHiddens(event, hiddens)
+    fieldResets(event, resets)
+    fieldDisableds(event, disableds)
+
+    return event
+  })
+}
+
+const changesEventSet = (changes: ChangeEventProps[]) => {
+  for (let change of changes) {
+    changeEvent(change)
+  }
+}
+
+kintone.events.on(detail, async event => {
   fieldHiddens(event, hiddens)
 
   return event
 })
 
 kintone.events.on(edit.show, async event => {
-  const { record } = event
-
   fieldHiddens(event, hiddens)
   fieldResets(event, resets)
   fieldDisableds(event, disableds)
@@ -82,8 +94,5 @@ kintone.events.on(edit.show, async event => {
 })
 
 if (changes) {
-  for (let change of changes) {
-    const { fieldCd, terms, setValue, hiddens } = change
-    kintone.events.on(edit.change(change.fieldCd), event => {})
-  }
+  changesEventSet(changes)
 }

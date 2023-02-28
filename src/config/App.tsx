@@ -1,49 +1,40 @@
-import { Button } from '@mui/material'
-import React, { createContext, useContext, useMemo } from 'react'
-import { getAllFields, getConfig } from '../modules'
-import {
-  ChangeEventsSetting,
-  DisableFieldsSetting,
-  HiddenFieldsSetting,
-  PluginTitle,
-  ResetFieldsSetting,
-} from './components'
+import React, { createContext, useContext, useMemo, useState } from 'react'
+import { getConfig } from '../modules'
+import { Title, Description, FormEndRow, Disableds } from './components'
 import { PageTab, TabItem } from './components/PageTabs'
 
+const TestElement = () => {
+  return <div />
+}
+
 const Elements = [
-  { element: <DisableFieldsSetting />, title: '非活性設定' },
-  { element: <HiddenFieldsSetting />, title: '非表示設定' },
-  { element: <ResetFieldsSetting />, title: 'リセット設定' },
-  { element: <ChangeEventsSetting />, title: '変更イベント設定' },
+  { element: <Disableds />, title: '非活性設定' },
+  { element: <TestElement />, title: '非表示設定' },
+  { element: <TestElement />, title: 'リセット設定' },
+  { element: <TestElement />, title: '変更イベント設定' },
+  { element: <TestElement />, title: '変更イベント設定' },
 ]
 
-console.log(kintone.$PLUGIN_ID)
-const config = getConfig()
-const setFields = async () => {
-  const fields = await getAllFields()
-  config.fields = fields
-}
-export const ConfigContext = createContext(config)
+export const ConfigContext = createContext(getConfig())
 
 export const App = () => {
-  if (!config.fields) setFields()
-  Promise.all(config.fields)
-  console.log(config)
-
+  const [config, setconfig] = useState(useContext(ConfigContext))
   return (
     <ConfigContext.Provider value={config}>
-      <form>
-        <PluginTitle />
-        <PageTab defaultKey={0}>
-          <br />
-          {Elements.map(({ element, title }, index) => (
-            <TabItem tabKey={index} children={element} title={title} key={index}></TabItem>
-          ))}
-        </PageTab>
+      <Title />
+      <Description />
+      <br />
+      <PageTab defaultKey={0}>
         <br />
-        <Button variant='outlined'>キャンセル</Button>
-        <Button variant='contained'>保存</Button>
-      </form>
+        <hr />
+        {Elements.map((elem, key) => (
+          <TabItem key={key} tabKey={key} title={elem.title}>
+            {elem.element}
+          </TabItem>
+        ))}
+      </PageTab>
+      <br />
+      <FormEndRow />
     </ConfigContext.Provider>
   )
 }

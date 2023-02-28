@@ -27,7 +27,7 @@ const TabContext = createContext<TabState>({
 })
 
 type TabProps = {
-  defaultKey: number
+  defaultKey?: number
 }
 
 const wrapStyle: React.CSSProperties = {
@@ -38,7 +38,7 @@ const itemStyle: React.CSSProperties = {
   display: 'inline-block',
 }
 
-export const PageTab: FC<PropsWithChildren<TabProps>> = ({ defaultKey, children }) => {
+export const PageTab: FC<PropsWithChildren<TabProps>> = ({ defaultKey = 0, children }) => {
   const [activeKey, setActiveKey] = useState(defaultKey)
   const [tabs, setTabs] = useState<TabValue[]>([])
   const addTab = useCallback((title: string, key: number) => {

@@ -14,7 +14,7 @@ declare type Terms = {
 declare type HiddenField = {
   fieldCd: string
   isDetail: boolean
-  terms?: Terms
+  terms: Terms
 }
 
 declare type ResetField = {
@@ -30,8 +30,6 @@ declare type DisableField = {
 
 declare type ChangeEventProps = {
   fieldCd: string
-  terms: Tems
-  setValue?: string | string[]
   hiddens?: HiddenField[]
   resets?: ResetField[]
   disableds?: DisableField[]
