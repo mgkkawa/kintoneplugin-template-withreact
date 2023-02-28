@@ -4,9 +4,9 @@ const Detail = TriggerHead + 'detail.'
 const Create = TriggerHead + 'create.'
 const Edit = TriggerHead + 'edit.'
 
-const Show = '.show'
-const Change = '.change.'
-const Submit = '.submit'
+const Show = 'show'
+const Change = 'change.'
+const Submit = 'submit'
 const Success = Submit + '.success'
 
 const isString = (str: string | string[]): str is string => typeof str === 'string'
